@@ -1,4 +1,4 @@
-package com.mapleinfo.nexonapi.DTO;
+package com.mapleinfo.nexonapi.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -72,7 +72,6 @@ public class NexonEquipmentResponseDTO {
 
     @Data
     public static class ItemOptionDTO {
-        // 1. 기본 4대 주요 스탯
         private String str;
         private String dex;
 
@@ -81,41 +80,33 @@ public class NexonEquipmentResponseDTO {
 
         private String luk;
 
-        // 2. 최대 HP / MP
         @JsonProperty("max_hp")
         private String maxHp;
 
         @JsonProperty("max_mp")
         private String maxMp;
 
-        // 3. 공격력 / 마력
         @JsonProperty("attack_power")
         private String attackPower;
 
         @JsonProperty("magic_power")
         private String magicPower;
 
-        // 4. 방어력 / 이동속도 / 점프력
         private String defense;
         private String speed;
         private String jump;
 
-        // 5. 올스탯 (퍼센트 단위)
         @JsonProperty("all_stat")
         private String allStat;
 
-        // 6. 보스 몬스터 공격 시 데미지 (퍼센트 단위)
         @JsonProperty("boss_damage")
         private String bossDamage;
 
-        // 7. 몬스터 방어율 무시 (퍼센트 단위)
         @JsonProperty("ignore_target_defense")
         private String ignoreTargetDefense;
 
-        // 8. 데미지 (퍼센트 단위)
         private String damage;
 
-        // 9. 착용 레벨 감소
         @JsonProperty("equipment_level_decrease")
         private String equipmentLevelDecrease;
     }

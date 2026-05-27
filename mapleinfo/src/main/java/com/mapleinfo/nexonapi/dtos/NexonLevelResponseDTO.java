@@ -1,4 +1,4 @@
-package com.mapleinfo.nexonapi.DTO;
+package com.mapleinfo.nexonapi.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
