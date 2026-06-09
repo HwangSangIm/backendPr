@@ -5,6 +5,7 @@ import com.mapleinfo.register.dto.UserRequestDTO;
 import com.mapleinfo.register.entity.CharacterInfo;
 import com.mapleinfo.register.entity.User;
 import com.mapleinfo.register.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void singUp(UserRequestDTO requestDTO){
@@ -29,7 +31,7 @@ public class UserService {
 
         User user = new User();
         user.setId(requestDTO.getId());
-        user.setPassword(requestDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
 
         for (String nickname : requestDTO.getNickname()){
             if (nickname != null && !nickname.isEmpty()){
@@ -46,7 +48,7 @@ public class UserService {
     public User login(LoginRequestDTO requestDTO){
         User user = userRepository.findById(requestDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
-        if (!user.getPassword().equals(requestDTO.getPassword())) {
+        if (!passwordEncoder.matches(requestDTO.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         return user;

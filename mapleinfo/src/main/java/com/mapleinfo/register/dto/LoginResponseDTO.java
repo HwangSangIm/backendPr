@@ -8,4 +8,5 @@ import java.util.List;
 public class LoginResponseDTO {
     private String id;
     private List<String> nickname;
+    private String token;
 }

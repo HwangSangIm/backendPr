@@ -5,6 +5,7 @@ import com.mapleinfo.register.dto.LoginResponseDTO;
 import com.mapleinfo.register.dto.UserRequestDTO;
 import com.mapleinfo.register.entity.CharacterInfo;
 import com.mapleinfo.register.entity.User;
+import com.mapleinfo.register.jwt.JwtProvider;
 import com.mapleinfo.register.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserRequestDTO requestDTO){
@@ -38,7 +40,8 @@ public class UserController {
             List<String> nicknames = user.getCharacterInfoList().stream()
                     .map(CharacterInfo::getCharacterName)
                     .toList();
-            LoginResponseDTO responseDTO = new LoginResponseDTO(user.getId(), nicknames);
+            String token = jwtProvider.createToken(user.getId());
+            LoginResponseDTO responseDTO = new LoginResponseDTO(user.getId(), nicknames, token);
             return ResponseEntity.ok(responseDTO);
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
